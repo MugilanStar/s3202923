@@ -1,5 +1,6 @@
 package uk.ac.tees.mad.musicity.screens.splash
 
+import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.tween
@@ -27,7 +28,10 @@ import androidx.navigation.NavHostController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import uk.ac.tees.mad.musicity.R
 import uk.ac.tees.mad.musicity.navigation.LoginDestination
 import uk.ac.tees.mad.musicity.navigation.SplashDestination
@@ -47,9 +51,11 @@ fun SplashScreen(navController: NavHostController) {
         )
         // Wait for splash screen duration
         delay(splashScreenDuration)
-        // Navigate to the login screen after delay
-        navController.navigate(LoginDestination.route) {
-            popUpTo(SplashDestination.route) { inclusive = true }
+        CoroutineScope(Dispatchers.Main).launch {
+            Log.d("THREAD", Thread.currentThread().name)
+            navController.navigate(LoginDestination.route) {
+                popUpTo(SplashDestination.route) { inclusive = true }
+            }
         }
     }
 
@@ -68,14 +74,16 @@ fun SplashScreen(navController: NavHostController) {
                     .scale(alphaAnim.value),
                 anim = R.raw.music
             )
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = "Musicity",
-                style = MaterialTheme.typography.displayLarge.copy(fontSize = 32.sp),
-                textAlign = TextAlign.Center,
-                modifier = Modifier.alpha(alphaAnim.value)
-            )
         }
+        Text(
+            text = "Musicity",
+            style = MaterialTheme.typography.displayLarge.copy(fontSize = 32.sp),
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .alpha(alphaAnim.value)
+                .align(Alignment.BottomCenter)
+        )
+
     }
 }
 

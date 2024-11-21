@@ -6,6 +6,7 @@ import android.credentials.GetCredentialException
 import android.credentials.GetCredentialRequest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Mail
@@ -13,15 +14,20 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import kotlinx.coroutines.launch
 import uk.ac.tees.mad.musicity.R
+import uk.ac.tees.mad.musicity.screens.splash.LoaderAnimation
 
 @Composable
 fun LoginScreen(
@@ -36,30 +42,49 @@ fun LoginScreen(
             doGoogleSignIn(viewModel, coroutineScope, context, null)
         }
 
-    Box(
+    Column(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
+        horizontalAlignment = Alignment.CenterHorizontally,
+
+        ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.weight(1f)
         ) {
-            Text("Sign in to Musicity", style = MaterialTheme.typography.titleMedium)
+            LoaderAnimation(
+                modifier = Modifier
+                    .size(200.dp),
+                anim = R.raw.music
+            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Text("Sign in to ", style = MaterialTheme.typography.titleLarge)
+                Text(
+                    text = "Musicity",
 
-            Button(
-                onClick = {
-                    doGoogleSignIn(
-                        viewModel,
-                        coroutineScope,
-                        context,
-                        startAddAccountIntentLauncher
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        color = Color(0xFF009688),
+                        fontSize = 24.sp,
                     )
-                },
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Icon(
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Card(
+            onClick = {
+                doGoogleSignIn(
+                    viewModel,
+                    coroutineScope,
+                    context,
+                    startAddAccountIntentLauncher
+                )
+            }
+        ) {
+            Row(modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)) {
+                Image(
                     painter = painterResource(id = R.drawable.ic_google),
                     contentDescription = "Google Icon",
                     modifier = Modifier.size(24.dp)
@@ -68,5 +93,7 @@ fun LoginScreen(
                 Text("Sign in with Google")
             }
         }
+        Spacer(modifier = Modifier.height(40.dp))
+
     }
 }

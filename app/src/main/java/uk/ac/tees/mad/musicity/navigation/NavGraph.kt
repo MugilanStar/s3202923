@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import uk.ac.tees.mad.musicity.screens.login.LoginScreen
 import uk.ac.tees.mad.musicity.screens.splash.SplashScreen
 
 @Composable
@@ -13,7 +14,7 @@ fun NavGraph(navController: NavHostController) {
             SplashScreen(navController = navController)
         }
         composable(LoginDestination.route) {
-
+            LoginScreen(navController = navController)
         }
     }
 }

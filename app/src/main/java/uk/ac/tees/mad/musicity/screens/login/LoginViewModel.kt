@@ -115,14 +115,14 @@ fun doGoogleSignIn(
 
     val credentialManager = CredentialManager.create(context)
 
-    fun getGoogleIdOption(context: Context): GetGoogleIdOption = GetGoogleIdOption.Builder()
+    val getGoogleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
         .setFilterByAuthorizedAccounts(false)
-        .setServerClientId("")
+        .setServerClientId("1098092318623-k26p1bu6f83t9fbku0keoblj9spv0ac9.apps.googleusercontent.com")
         .setAutoSelectEnabled(true)
         .build()
 
     val googleSignRequest: GetCredentialRequest = GetCredentialRequest.Builder()
-        .addCredentialOption(getGoogleIdOption(context))
+        .addCredentialOption(getGoogleIdOption)
         .build()
 
     coroutineScope.launch {
