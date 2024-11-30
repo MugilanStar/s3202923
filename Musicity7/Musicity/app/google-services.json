@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1098092318623",
+    "project_id": "musicity-cebae",
+    "storage_bucket": "musicity-cebae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098092318623:android:9cfd617e31307086d6b7aa",
+        "android_client_info": {
+          "package_name": "uk.ac.tees.mad.musicity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1098092318623-pbda8h1c7pdfkk74vbk4t6j55jmj50bo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uk.ac.tees.mad.musicity",
+            "certificate_hash": "f94707b4fd17a677933e8e276332f7ad834467ae"
+          }
+        },
+        {
+          "client_id": "1098092318623-k26p1bu6f83t9fbku0keoblj9spv0ac9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWf4yh05BVC0tIZzox7O6Yu4Umc2WQZZ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1098092318623-k26p1bu6f83t9fbku0keoblj9spv0ac9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
