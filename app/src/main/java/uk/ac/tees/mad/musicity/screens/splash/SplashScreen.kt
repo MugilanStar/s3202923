@@ -28,11 +28,14 @@ import androidx.navigation.NavHostController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import uk.ac.tees.mad.musicity.R
+import uk.ac.tees.mad.musicity.navigation.HomeDestination
 import uk.ac.tees.mad.musicity.navigation.LoginDestination
 import uk.ac.tees.mad.musicity.navigation.SplashDestination
 
@@ -53,7 +56,7 @@ fun SplashScreen(navController: NavHostController) {
         delay(splashScreenDuration)
         CoroutineScope(Dispatchers.Main).launch {
             Log.d("THREAD", Thread.currentThread().name)
-            navController.navigate(LoginDestination.route) {
+            navController.navigate(if (Firebase.auth.currentUser != null) HomeDestination.route else LoginDestination.route) {
                 popUpTo(SplashDestination.route) { inclusive = true }
             }
         }
