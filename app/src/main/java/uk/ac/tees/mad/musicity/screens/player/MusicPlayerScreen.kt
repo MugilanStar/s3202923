@@ -37,6 +37,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -56,7 +57,7 @@ fun MusicPlayerScreen(
 ) {
     val currentTrack by viewModel.currentTrack.collectAsState()
     val isPlaying by viewModel.isPlaying.collectAsState()
-    val isFavorite by viewModel.isFavorite.collectAsState(initial = false)
+    val isFavorite by viewModel.isFavorite.collectAsState()
 
     val postNotificationPermission =
         rememberPermissionState(permission = "android.permission.POST_NOTIFICATIONS")
@@ -86,7 +87,7 @@ fun MusicPlayerScreen(
                 actions = {
                     if (isFavorite) {
                         IconButton(onClick = { viewModel.removeTrackFromFavorites() }) {
-                            Icon(imageVector = Icons.Default.Favorite, contentDescription = null)
+                            Icon(imageVector = Icons.Default.Favorite, contentDescription = null, tint = Color.Red)
                         }
                     } else {
                         IconButton(onClick = { viewModel.addTrackToFavorites() }) {

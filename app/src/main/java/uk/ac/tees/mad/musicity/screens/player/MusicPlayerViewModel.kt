@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import uk.ac.tees.mad.musicity.data.database.FavoriteTrackDao
@@ -126,8 +127,11 @@ class MusicPlayerViewModel @Inject constructor(
         }
     }
 
-    suspend fun isTrackFavorite(trackId: Long): Flow<Boolean> {
-        return favoriteTrackDao.getFavoriteTrackById(trackId).map { it != null }
-
+    suspend fun isTrackFavorite(trackId: Long) {
+        val favoriteMap = favoriteTrackDao.getFavoriteTrackById(trackId).map { it != null }
+        favoriteMap.collect {
+            Log.d("GA", it.toString())
+            _isFavorite.emit(it)
+        }
     }
 }

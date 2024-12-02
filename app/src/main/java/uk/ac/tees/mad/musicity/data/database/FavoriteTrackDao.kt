@@ -1,7 +1,6 @@
 package uk.ac.tees.mad.musicity.data.database
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -14,12 +13,12 @@ interface FavoriteTrackDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addFavoriteTrack(track: FavoriteTrack)
 
-    @Delete
+    @Query("DELETE FROM favorite_tracks WHERE id = :trackId")
     suspend fun removeFavoriteTrack(trackId: Long)
 
     @Query("SELECT * FROM favorite_tracks")
     fun getAllFavoriteTracks(): Flow<List<FavoriteTrack>>
 
     @Query("SELECT * FROM favorite_tracks WHERE id = :trackId")
-    suspend fun getFavoriteTrackById(trackId: Long): Flow<FavoriteTrack?>
+    fun getFavoriteTrackById(trackId: Long): Flow<FavoriteTrack?>
 }
