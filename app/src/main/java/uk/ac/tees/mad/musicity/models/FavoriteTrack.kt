@@ -8,5 +8,6 @@ data class FavoriteTrack(
     @PrimaryKey val id: Long,
     val title: String,
     val artist: String,
-    val previewUrl: String
+    val previewUrl: String,
+    val image: String
 )

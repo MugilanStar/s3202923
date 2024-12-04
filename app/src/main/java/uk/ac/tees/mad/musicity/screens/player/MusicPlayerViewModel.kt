@@ -112,7 +112,8 @@ class MusicPlayerViewModel @Inject constructor(
                     id = track.id,
                     title = track.title,
                     artist = track.artist.name,
-                    previewUrl = track.preview
+                    previewUrl = track.preview,
+                    image = track.md5_image
                 )
                 favoriteTrackDao.addFavoriteTrack(favoriteTrack)
             }
