@@ -27,6 +27,7 @@ import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import kotlinx.coroutines.launch
 import uk.ac.tees.mad.musicity.R
+import uk.ac.tees.mad.musicity.navigation.HomeDestination
 import uk.ac.tees.mad.musicity.screens.splash.LoaderAnimation
 
 @Composable
@@ -36,11 +37,18 @@ fun LoginScreen(
 ) {
     val context = LocalContext.current as Activity
     val coroutineScope = rememberCoroutineScope()
+    val uiState = viewModel.uiState.value
 
     val startAddAccountIntentLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
             doGoogleSignIn(viewModel, coroutineScope, context, null)
         }
+
+    LaunchedEffect(uiState) {
+        if (uiState.isAuthenticated) {
+            navController.navigate(HomeDestination.route)
+        }
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),

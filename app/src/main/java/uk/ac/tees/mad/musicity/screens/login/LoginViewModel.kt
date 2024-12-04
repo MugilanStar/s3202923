@@ -68,6 +68,9 @@ class LoginViewModel @Inject constructor(
                         val authCredential = GoogleAuthProvider.getCredential(googleIdToken, null)
                         val user = Firebase.auth.signInWithCredential(authCredential).await().user
                         user?.run {
+                            // Store user info in Firestore
+                            storeUserInFirestore(user)
+
                             updateUiState {
                                 AuthUiState(
                                     alreadySignUp = true,
@@ -78,9 +81,6 @@ class LoginViewModel @Inject constructor(
                                     authState = if (user.isAnonymous) AuthState.Authenticated else AuthState.SignedIn
                                 )
                             }
-
-                            // Store user info in Firestore
-                            storeUserInFirestore(user)
                         }
                     } catch (e: Exception) {
                         Log.e(TAG, "Error in sign-in: ${e.message}", e)

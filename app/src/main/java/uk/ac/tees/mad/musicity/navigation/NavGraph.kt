@@ -7,9 +7,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import uk.ac.tees.mad.musicity.models.Data
+import uk.ac.tees.mad.musicity.screens.favorites.FavoritesScreen
 import uk.ac.tees.mad.musicity.screens.home.HomeScreen
 import uk.ac.tees.mad.musicity.screens.login.LoginScreen
 import uk.ac.tees.mad.musicity.screens.player.MusicPlayerScreen
+import uk.ac.tees.mad.musicity.screens.profile.ProfileScreen
 import uk.ac.tees.mad.musicity.screens.splash.SplashScreen
 
 @Composable
@@ -34,10 +36,10 @@ fun NavGraph(navController: NavHostController) {
             } ?: navController.navigateUp()
         }
         composable(FavoritesDestination.route) {
-            // FavoritesScreen()
+            FavoritesScreen(navController = navController)
         }
         composable(ProfileDestination.route) {
-            // ProfileScreen()
+            ProfileScreen(navController = navController)
         }
     }
 }

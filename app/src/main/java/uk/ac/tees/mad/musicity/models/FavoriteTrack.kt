@@ -11,3 +11,11 @@ data class FavoriteTrack(
     val previewUrl: String,
     val image: String
 )
+
+fun FavoriteTrack.toData() = Data(
+    id = id,
+    title = title,
+    artist = Artist(0, artist),
+    preview = previewUrl,
+    md5_image = image
+)

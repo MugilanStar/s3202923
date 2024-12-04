@@ -41,11 +41,14 @@ object AppModule {
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(
-            context.applicationContext,
-            AppDatabase::class.java,
-            "musicity_database"
-        ).build()
+        return Room
+            .databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java,
+                "musicity_database"
+            )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides
