@@ -88,6 +88,7 @@ dependencies {
 
     // Room for local caching
     implementation("androidx.room:room-runtime:2.5.2")
+    implementation(libs.firebase.storage.ktx)
     ksp("androidx.room:room-compiler:2.5.2")
     implementation("androidx.room:room-ktx:2.5.2")
 
