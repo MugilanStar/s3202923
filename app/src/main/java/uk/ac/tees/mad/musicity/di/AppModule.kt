@@ -2,6 +2,9 @@ package uk.ac.tees.mad.musicity.di
 
 import android.content.Context
 import androidx.room.Room
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,4 +58,18 @@ object AppModule {
     fun provideFavoriteTrackDao(appDatabase: AppDatabase): FavoriteTrackDao {
         return appDatabase.favoriteTrackDao()
     }
+
+    @Singleton
+    @Provides
+    fun providesFirebaseAuth() = FirebaseAuth.getInstance()
+
+    @Singleton
+    @Provides
+    fun providesFirebaseFirestore() = FirebaseFirestore.getInstance()
+
+    @Singleton
+    @Provides
+    fun providesFirebaseStorage() = FirebaseStorage.getInstance()
+
+
 }

@@ -22,23 +22,25 @@ class ProfileViewModel @Inject constructor(
     private val _user = MutableStateFlow<User?>(null)
     val user = _user.asStateFlow()
 
-    val firebase = FirebaseAuth.getInstance()
-    val uid = firebase.uid
+    private val firebase = FirebaseAuth.getInstance()
+    private val uid = firebase.uid
 
     init {
-        viewModelScope.launch {
-            uid?.let {
-                firestore.collection("users").document(uid).get().addOnSuccessListener { snapshot ->
-                    val data = snapshot.data
-                    _user.value = User(
-                        uid = data?.get("uid") as String,
-                        name = data["name"] as String,
-                        email = data["email"] as String,
-                        photoUrl = data["photoUrl"] as String
-                    )
-                }.addOnFailureListener {
-                    it.printStackTrace()
-                }
+        getUserData()
+    }
+
+    fun getUserData() = viewModelScope.launch {
+        uid?.let {
+            firestore.collection("users").document(uid).get().addOnSuccessListener { snapshot ->
+                val data = snapshot.data
+                _user.value = User(
+                    uid = data?.get("uid") as String,
+                    name = data["name"] as String,
+                    email = data["email"] as String,
+                    photoUrl = data["photoUrl"] as String
+                )
+            }.addOnFailureListener {
+                it.printStackTrace()
             }
         }
     }
@@ -47,13 +49,14 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             uid?.let {
                 firestore.collection("users").document(uid)
-                    .update("name", newName)
-                _user.value = _user.value?.copy(name = newName)
+                    .update("name", newName).addOnSuccessListener {
+                        _user.value = _user.value?.copy(name = newName)
+                        getUserData()
+                    }
             }
         }
     }
 
-    // Update profile picture
     fun updateProfilePicture(uri: Uri) {
         viewModelScope.launch {
             uid?.let {

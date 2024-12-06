@@ -2,6 +2,7 @@ package uk.ac.tees.mad.musicity.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -30,9 +32,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import uk.ac.tees.mad.musicity.R
 import uk.ac.tees.mad.musicity.models.Data
 import uk.ac.tees.mad.musicity.navigation.BottomNavigationBar
 import uk.ac.tees.mad.musicity.navigation.MusicPlayerDestination
+import uk.ac.tees.mad.musicity.screens.splash.LoaderAnimation
 
 @Composable
 fun HomeScreen(
@@ -41,10 +45,16 @@ fun HomeScreen(
 ) {
     val trendingMusic by viewModel.trendingMusic.collectAsState()
     val searchedMusic by viewModel.searchedMusic.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
 
     Scaffold(
         bottomBar = { BottomNavigationBar(navController = navController) },
     ) {
+        if (isLoading) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                LoaderAnimation(modifier = Modifier.size(100.dp), anim = R.raw.music)
+            }
+        }
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -53,12 +63,12 @@ fun HomeScreen(
             item {
                 Text(
                     text = "Trending Music",
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(16.dp)
                 )
             }
 
-            items(trendingMusic) { musicItem ->
+            items(searchedMusic.ifEmpty { trendingMusic }) { musicItem ->
                 MusicCard(
                     musicItem = musicItem,
                     onClick = {

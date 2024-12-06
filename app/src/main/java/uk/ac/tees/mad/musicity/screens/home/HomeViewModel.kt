@@ -22,19 +22,26 @@ class HomeViewModel @Inject constructor(
     private val _searchedMusic = MutableStateFlow<List<Data>>(emptyList())
     val searchedMusic = _searchedMusic.asStateFlow()
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
     init {
         fetchTrendingMusic()
     }
 
     private fun fetchTrendingMusic() {
         viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.emit(true)
             _trendingMusic.value = musicRepository.getTrendingMusic()
+            _isLoading.emit(false)
         }
     }
 
     private fun fetchSearchMusic(query: String) {
         viewModelScope.launch {
-            _searchedMusic.value = musicRepository.searchMusic("query")
+            _isLoading.emit(false)
+            _searchedMusic.value = musicRepository.searchMusic(query)
+            _isLoading.emit(true)
         }
     }
 }
