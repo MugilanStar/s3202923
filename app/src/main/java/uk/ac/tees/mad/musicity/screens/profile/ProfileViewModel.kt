@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -25,11 +26,16 @@ class ProfileViewModel @Inject constructor(
     private val firebase = FirebaseAuth.getInstance()
     private val uid = firebase.uid
 
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
     init {
         getUserData()
     }
 
-    fun getUserData() = viewModelScope.launch {
+    fun getUserData() = viewModelScope.launch(Dispatchers.IO) {
+        _isLoading.emit(true)
         uid?.let {
             firestore.collection("users").document(uid).get().addOnSuccessListener { snapshot ->
                 val data = snapshot.data
@@ -39,14 +45,18 @@ class ProfileViewModel @Inject constructor(
                     email = data["email"] as String,
                     photoUrl = data["photoUrl"] as String
                 )
+                _isLoading.value = false
+
             }.addOnFailureListener {
                 it.printStackTrace()
+                _isLoading.value = false
             }
         }
     }
 
     fun updateUserName(newName: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.value = true
             uid?.let {
                 firestore.collection("users").document(uid)
                     .update("name", newName).addOnSuccessListener {
@@ -58,7 +68,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun updateProfilePicture(uri: Uri) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             uid?.let {
                 val storageRef = storage.reference.child("profile_pictures/$uid.jpg")
                 storageRef.putFile(uri).await()
