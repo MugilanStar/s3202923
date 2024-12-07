@@ -32,6 +32,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -88,7 +89,9 @@ fun ProfileScreen(
         bottomBar = { BottomNavigationBar(navController = navController) }
     ) { padd ->
         if (isLoading) {
-            LinearProgressIndicator()
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                LinearProgressIndicator()
+            }
         }
         Column(modifier = Modifier.padding(padd)) {
             Column(
@@ -137,7 +140,7 @@ fun ProfileScreen(
                                 IconButton(
                                     onClick = {
                                         isEditing = false
-                                        if (name.isNotEmpty()) {
+                                        if (name.isNotEmpty() && name != user.name) {
                                             viewModel.updateUserName(name)
                                         }
                                     }
@@ -149,7 +152,12 @@ fun ProfileScreen(
                                     )
                                 }
                             }
-                        }
+                        },
+                        colors = TextFieldDefaults.colors(
+                            disabledTextColor = Color.Black,
+                            disabledContainerColor = Color.Transparent,
+                            disabledTrailingIconColor = Color.Black
+                        )
                     )
 
                     Spacer(modifier = Modifier.height(50.dp))

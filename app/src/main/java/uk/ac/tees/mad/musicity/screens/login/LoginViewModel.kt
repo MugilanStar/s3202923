@@ -21,7 +21,9 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.snapshots
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -101,7 +103,19 @@ class LoginViewModel @Inject constructor(
             "email" to user.email,
             "photoUrl" to user.photoUrl.toString()
         )
-        firestore.collection("users").document(user.uid).set(userMap).await()
+        val userRef = firestore.collection("users")
+            .document(user.uid)
+
+        firestore.runTransaction {
+            val snapshot = it.get(userRef)
+            if (!snapshot.exists()) {
+                it.set(userRef, userMap)
+            }
+        }.addOnSuccessListener {
+            Log.d("FIRESTORE", "User successfully created if not exists")
+        }.addOnFailureListener { e ->
+            Log.w("FIRESTORE", "Transaction failure.", e)
+        }
     }
 }
 
