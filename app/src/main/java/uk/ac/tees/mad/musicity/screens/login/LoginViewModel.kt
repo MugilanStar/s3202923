@@ -131,7 +131,7 @@ fun doGoogleSignIn(
 
     val getGoogleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
         .setFilterByAuthorizedAccounts(false)
-        .setServerClientId("1098092318623-k26p1bu6f83t9fbku0keoblj9spv0ac9.apps.googleusercontent.com")
+        .setServerClientId("266311606822-bo4vvofanl7gq1gl526n05cqsu48lpk1.apps.googleusercontent.com")
         .setAutoSelectEnabled(true)
         .build()
 

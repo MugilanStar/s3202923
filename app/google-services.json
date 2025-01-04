@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "1098092318623",
-    "project_id": "musicity-cebae",
-    "storage_bucket": "musicity-cebae.appspot.com"
+    "project_number": "266311606822",
+    "project_id": "musicity-5519b",
+    "storage_bucket": "musicity-5519b.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1098092318623:android:9cfd617e31307086d6b7aa",
+        "mobilesdk_app_id": "1:266311606822:android:5cedb84837eedbe01b3ce7",
         "android_client_info": {
           "package_name": "uk.ac.tees.mad.musicity"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1098092318623-pbda8h1c7pdfkk74vbk4t6j55jmj50bo.apps.googleusercontent.com",
+          "client_id": "266311606822-cd6ibdci2q7cg9i76kp5ntukbq1hod1m.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "uk.ac.tees.mad.musicity",
@@ -22,20 +22,28 @@
           }
         },
         {
-          "client_id": "1098092318623-k26p1bu6f83t9fbku0keoblj9spv0ac9.apps.googleusercontent.com",
+          "client_id": "266311606822-niivcdvov4q3vf37i09m02gsgufo4qjh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uk.ac.tees.mad.musicity",
+            "certificate_hash": "873cc3d7773081a7d8f227b791aba943bc5ffd1d"
+          }
+        },
+        {
+          "client_id": "266311606822-bo4vvofanl7gq1gl526n05cqsu48lpk1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDWf4yh05BVC0tIZzox7O6Yu4Umc2WQZZ8"
+          "current_key": "AIzaSyAOTMwHqHTSAzuzbqRQjs66btttTSUXtmM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1098092318623-k26p1bu6f83t9fbku0keoblj9spv0ac9.apps.googleusercontent.com",
+              "client_id": "266311606822-bo4vvofanl7gq1gl526n05cqsu48lpk1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
